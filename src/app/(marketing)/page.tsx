@@ -1,3 +1,4 @@
+import CarouselBranding from "@/components/carousel-branding"
 import { Button } from "@/components/ui/button"
 import { FC } from "react"
 
@@ -9,11 +10,11 @@ const page: FC<pageProps> = ({}) => {
       <section className="min-w-screen min-h-screen flex items-center justify-center flex-col">
         <div className="min-w-screen min-h-screen flex items-center justify-center gap-4 flex-col">
           <div className="container min-w-screen min-h-screen flex items-center justify-center gap-4 flex-col ">
-            <h1 className="font-heading text-primary_heading text-foreground text-center leading-normal">
+            <h1 className="font-heading font-bold text-primary_heading text-foreground text-center leading-[1]">
               செயல்
             </h1>
             <span className="font-paragraph text-foreground text-center text-sm">
-              /say-yel/ verb
+              /say-yel/ <i>Verb</i>
             </span>
             <p className=" font-paragraph text-foreground text-center text-super_paragraph_heading max-w-xl">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit dolor sit
@@ -22,13 +23,15 @@ const page: FC<pageProps> = ({}) => {
           </div>
         </div>
         <div className="min-w-screen min-h-screen flex items-center justify-center gap-4 flex-col">
-          <div className="container min-w-screen min-h-screen">
+          <div className="container">
             <div className=" grid sm:grid-cols-1 md:grid-cols-2">
               <div className=""></div>
               <div className="flex flex-col items-start justify-center gap-4">
                 <h2 className="font-heading text-secondary_heading text-foreground leading-normal">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit dolor
-                  sit amet, consectetur adipiscing elit.
+                  <strong>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                    dolor sit amet, consectetur adipiscing elit.
+                  </strong>
                 </h2>
                 <p className=" font-paragraph text-foreground text-paragraph_heading max-w-xl leading-8">
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -45,12 +48,17 @@ const page: FC<pageProps> = ({}) => {
         </div>
       </section>
       <section className="min-w-screen min-h-screen flex items-center justify-center">
-        <div className="container min-w-screen min-h-screen">
+        <CarouselBranding />
+      </section>
+      <section className="min-w-screen min-h-screen flex items-center justify-center">
+        <div className="container">
           <div className=" grid sm:grid-cols-1 md:grid-cols-2">
             <div className="flex flex-col items-start justify-center gap-4">
               <h2 className="font-heading text-secondary_heading text-foreground leading-normal">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit dolor
-                sit amet, consectetur adipiscing elit.
+                <strong>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit dolor
+                  sit amet, consectetur adipiscing elit.
+                </strong>
               </h2>
               <p className=" font-paragraph text-foreground text-paragraph_heading max-w-xl leading-8">
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco

@@ -1,4 +1,5 @@
 import CarouselBranding from "@/components/carousel-branding"
+import ExperienceFBL from "@/components/experience-fbl"
 import { Button } from "@/components/ui/button"
 import { FC } from "react"
 
@@ -74,6 +75,7 @@ const page: FC<pageProps> = ({}) => {
           </div>
         </div>
       </section>
+      <ExperienceFBL />
     </>
   )
 }

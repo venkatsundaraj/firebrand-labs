@@ -49,6 +49,7 @@ const CarouselBranding: FC<CarouselBranding> = function () {
       opts={{
         align: "start",
         loop: true,
+        active: true,
       }}
     >
       <CarouselContent className="w-screen h-screen pl-0 ml-0">

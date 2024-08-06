@@ -8,7 +8,7 @@ interface layoutProps {
 const layout: FC<layoutProps> = ({ children }) => {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <main>{children}</main>
     </>
   )

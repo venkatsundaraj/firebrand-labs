@@ -65,6 +65,10 @@ const config: Config = {
         paragraph: ["var(--paragraph)"],
         heading: ["var(--heading)"],
       },
+      transition: {
+        width: "width 200ms linear",
+        height: "height 200ms linear",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

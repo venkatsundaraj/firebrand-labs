@@ -4,23 +4,17 @@ import { FC } from "react"
 import { Button } from "@/components/ui/button"
 import { useScroll, useMotionValueEvent } from "framer-motion"
 import { useRef, useState, MutableRefObject } from "react"
+import { cn } from "@/lib/utils"
 
 interface ExperienceFBLProps {}
 
 const ExperienceFBL: FC<ExperienceFBLProps> = ({}) => {
+  const [scrollValue, setScrollValue] = useState<number>(0)
   const { scrollY } = useScroll()
   const sectionRef: MutableRefObject<HTMLElement | null> =
     useRef<HTMLElement>(null)
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    console.log(
-      latest,
-      // @ts-ignore
-      sectionRef.current.offsetTop - sectionRef.current.clientHeight,
-      latest -
-        // @ts-ignore
-        (sectionRef.current.offsetTop - sectionRef.current.clientHeight)
-    )
     // @ts-ignore
     const primaryCondition =
       // @ts-ignore
@@ -32,15 +26,18 @@ const ExperienceFBL: FC<ExperienceFBLProps> = ({}) => {
           (sectionRef.current.offsetTop - sectionRef.current.clientHeight)) /
         // @ts-ignore
         sectionRef.current?.clientHeight
-
-      console.log(value * 100)
+      const returnValue = Number((value * 100).toFixed(2))
+      setScrollValue(returnValue)
     }
   })
 
   return (
     <section
       ref={sectionRef}
-      className="min-w-screen min-h-screen flex items-center justify-center relative before:content-[''] before:w-8 before:h-8 before:bg-foreground before:absolute before:top-[50%] before:left-[50%] before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-lg"
+      className={cn(
+        "min-w-screen min-h-screen flex items-center overflow-hidden justify-center relative before:content-[''] before:bg-foreground before:absolute before:top-[50%] before:left-[50%] before:translate-x-[-50%] before:translate-y-[-50%] before:rounded-full",
+        `before:w-[${scrollValue}%] before:h-[${scrollValue}%] before:transition-width before:transition-height`
+      )}
     >
       <div className="container">
         <div className=" grid sm:grid-cols-1 md:grid-cols-2">

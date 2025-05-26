@@ -20,56 +20,10 @@ import { chat, ExtractedData } from "@/lib/ai-config";
 
 interface pageProps {}
 
-type Fn = (value: JSONValue) => JSONValue;
-type JSONValue =
-  | string
-  | number
-  | null
-  | boolean
-  | JSONValue[]
-  | { [key: string]: JSONValue };
-
-// -----------------------------------------------------------
-
-const main = function () {
-  const value = [
-    "ab",
-    "def",
-    "ac",
-    "efc",
-    "ab",
-    "lm",
-    "mnp",
-    "ijklm",
-    "mnop",
-    "st",
-    "nopqrs",
-    "uvw",
-  ];
-
-  const alphaphets = "abcdefghijklmnopqrstuvwxyza";
-
-  const result = new Set();
-  const previousValue = [];
-  for (const val of value) {
-    // const splt = val.split('')
-
-    // const alsplit = alphaphets.split('')
-    // const indx =  alsplit.findIndex(item=>splt[0]===item)
-
-    if (alphaphets.includes(val)) {
-      previousValue.push(val);
-    }
-  }
-
-  const res = previousValue.sort((a, b) => b.length - a.length);
-  console.log(res[0]);
-};
-
-// -----------------------------------------------------------
 const page: FC<pageProps> = ({}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [content, setContent] = useState<Array<string>>([]);
   const { initWebcam, isReady, stream, captureFrame, stopWebcam } = UseWebcam();
 
   useEffect(() => {
@@ -100,8 +54,9 @@ const page: FC<pageProps> = ({}) => {
       ]);
 
       const text = result.response.text();
-      const { poetic }: ExtractedData = JSON.parse(text);
-      console.log(poetic);
+      const { poetic, imageBackground }: ExtractedData = JSON.parse(text);
+      console.log(poetic, imageBackground);
+      setContent([poetic, imageBackground]);
     }
   };
   return (
@@ -114,6 +69,13 @@ const page: FC<pageProps> = ({}) => {
       >
         Take Picture
       </Button>
+      <ul className="flex gap-4 items-center justify-center flex-col text-4xl bg-white">
+        {content.map((item, i) => (
+          <li className="text-4xl text-emerald-600" key={i}>
+            {item}
+          </li>
+        ))}
+      </ul>
       <canvas className="hidden" ref={canvasRef} width={500} height={200} />
     </main>
   );

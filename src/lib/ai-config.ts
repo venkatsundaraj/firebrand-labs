@@ -11,7 +11,7 @@ interface GenerationConfig {
 }
 
 const schema = {
-  description: "Describe the face",
+  description: "Describe the details of the image",
   type: SchemaType.OBJECT,
   properties: {
     poetic: {
@@ -19,12 +19,18 @@ const schema = {
       description: "describe my face flaws",
       nullable: false,
     },
+    imageBackground: {
+      type: SchemaType.STRING,
+      description: "count you guess the movie posters name in my background?",
+      nullable: false,
+    },
   },
-  required: ["poetic"],
+  required: ["poetic", "imageBackground"],
 };
 
 export interface ExtractedData {
   poetic: string;
+  imageBackground: string;
 }
 
 // 4. Initialize the AI client

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { FC } from "react"
+import * as React from "react";
+import { FC } from "react";
 
 import {
   Carousel,
@@ -10,9 +10,10 @@ import {
   CarouselNext,
   type CarouselApi,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import { cn } from "@/lib/utils"
-import { tags } from "@/config/marketing"
+} from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
+import { tags } from "@/config/marketing";
+import Autoplay from "embla-carousel-autoplay";
 
 interface CarouselBranding {}
 
@@ -22,25 +23,25 @@ const colors = [
   "bg-orange-500",
   "bg-green-500",
   "bg-yellow-500",
-]
+];
 
 const CarouselBranding: FC<CarouselBranding> = function () {
-  const [api, setApi] = React.useState<CarouselApi>()
-  const [current, setCurrent] = React.useState(0)
-  const [count, setCount] = React.useState(0)
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
     if (!api) {
-      return
+      return;
     }
 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1)
-    })
-  }, [api])
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   return (
     <Carousel
@@ -50,7 +51,15 @@ const CarouselBranding: FC<CarouselBranding> = function () {
         align: "start",
         loop: true,
         active: true,
+        skipSnaps: true,
+        duration: 2000,
       }}
+      plugins={[
+        Autoplay({
+          delay: 2000,
+          stopOnInteraction: false,
+        }),
+      ]}
     >
       <CarouselContent className="w-screen h-screen pl-0 ml-0">
         {Array.from({ length: 5 }).map((_, index) => (
@@ -82,7 +91,7 @@ const CarouselBranding: FC<CarouselBranding> = function () {
         ))}
       </div>
     </Carousel>
-  )
-}
+  );
+};
 
-export default CarouselBranding
+export default CarouselBranding;

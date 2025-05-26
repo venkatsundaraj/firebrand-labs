@@ -10,12 +10,7 @@ const coreConfig = {
   images: {
     remotePatterns: [{ hostname: "utfs.io" }],
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  reactStrictMode: false,
 
   async rewrites() {
     return [
@@ -27,10 +22,10 @@ const coreConfig = {
         source: "/ingest/:path*",
         destination: "https://us.i.posthog.com/:path*",
       },
-    ]
+    ];
   },
-}
+};
 
-const config = coreConfig
+const config = coreConfig;
 
-export default config
+export default config;

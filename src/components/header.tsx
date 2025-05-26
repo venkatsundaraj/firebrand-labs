@@ -1,12 +1,13 @@
-import Link from "next/link"
-import Image from "next/image"
-import { FC } from "react"
+import Link from "next/link";
+import Image from "next/image";
+import { FC } from "react";
+import NavItems from "./nav-items";
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = ({}) => {
   return (
-    <header className="w-full py-4 px-2 bg-transparent">
+    <header className="w-full py-6 sm:px-2 md:px-12 bg-transparent sticky top-0">
       <div className="w-full flex items-center justify-between flex-row">
         <Link href={"/"}>
           <Image
@@ -16,9 +17,10 @@ const Header: FC<HeaderProps> = ({}) => {
             alt="Firebrand Labs"
           />
         </Link>
+        <NavItems />
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

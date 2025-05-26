@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
@@ -60,6 +60,7 @@ const config: Config = {
         secondary_heading: "clamp(20px, 3vw, 28px)",
         paragraph_heading: "clamp(14px, 1.4vw, 20px)",
         super_paragraph_heading: "clamp(18px, 1.4vw, 24px)",
+        subtitle_heading: "clamp(14px, 1.35vw, 18px)",
       },
       fontFamily: {
         paragraph: ["var(--paragraph)"],
@@ -86,5 +87,5 @@ const config: Config = {
     },
   },
   plugins: [],
-}
-export default config
+};
+export default config;

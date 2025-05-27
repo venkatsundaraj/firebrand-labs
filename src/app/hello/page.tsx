@@ -17,13 +17,18 @@ import {
 } from "@/lib/ai-helpers";
 import { GenerateContentResult } from "@google/generative-ai";
 import { chat, ExtractedData } from "@/lib/ai-config";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [content, setContent] = useState<Array<string>>([]);
+  const [content, setContent] = useState<Array<string>>([
+    "Hello World",
+    "One Two",
+  ]);
   const { initWebcam, isReady, stream, captureFrame, stopWebcam } = UseWebcam();
 
   useEffect(() => {
@@ -61,22 +66,31 @@ const page: FC<pageProps> = ({}) => {
   };
   return (
     <main className="w-screen h-screen flex items-center justify-center gap-4 flex-col">
-      <video width={600} height={200} ref={videoRef} autoPlay />
-      <Button
-        className="bg-foreground hover:border-white hover:outline-foreground"
-        onClick={takePicture}
-        disabled={!isReady}
-      >
-        Take Picture
-      </Button>
-      <ul className="flex gap-4 items-center justify-center flex-col text-4xl bg-white">
-        {content.map((item, i) => (
-          <li className="text-4xl text-emerald-600" key={i}>
-            {item}
-          </li>
-        ))}
-      </ul>
-      <canvas className="hidden" ref={canvasRef} width={500} height={200} />
+      <div className="container  flex items-center justify-center gap-4 flex-col">
+        <div className="grid w-full grid-cols-1 md:grid-cols-2 items-start justify-center">
+          <video width={600} height={200} ref={videoRef} autoPlay />
+          <div className="flex flex-col items-start justify-center gap-8">
+            <Button
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "rounded-sm"
+              )}
+              onClick={takePicture}
+              disabled={!isReady}
+            >
+              Take Picture
+            </Button>
+            <ul className="flex gap-2 items-start justify-center flex-col text-4xl">
+              {content.map((item, i) => (
+                <li className="text-[16px] text-foreground" key={i}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <canvas className="hidden" ref={canvasRef} width={500} height={200} />
+        </div>
+      </div>
     </main>
   );
 };

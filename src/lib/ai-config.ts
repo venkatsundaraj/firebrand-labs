@@ -11,29 +11,24 @@ interface GenerationConfig {
 }
 
 const schema = {
-  description: "Describe the details of the image",
+  description: "generate awkward but not offensive questions",
   type: SchemaType.OBJECT,
   properties: {
-    poetic: {
-      type: SchemaType.STRING,
-      description: "describe my face flaws",
-      nullable: false,
-    },
     questions: {
       type: SchemaType.ARRAY,
       items: {
         type: SchemaType.STRING,
         description:
-          "A bunch of random questions about the image that you will answer it later. The questions should be fun, very random, it should make the person uncomfortable, and it should be very personal. The questions should be very short, and it should not be more than 5 words.",
+          "Generate awkward, embarrassing but not explicitly vulgar questions like 'What's your most embarrassing habit?', 'When did you last cry?', 'What's your weirdest fear?'",
       },
     },
   },
-  required: ["poetic", "questions"],
+  required: ["questions"],
 };
 
 export interface ExtractedData {
-  poetic: string;
   questions: string[];
+  // randomQuestions: string[];
 }
 
 // 4. Initialize the AI client

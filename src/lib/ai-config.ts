@@ -19,18 +19,21 @@ const schema = {
       description: "describe my face flaws",
       nullable: false,
     },
-    imageBackground: {
-      type: SchemaType.STRING,
-      description: "count you guess the movie posters name in my background?",
-      nullable: false,
+    questions: {
+      type: SchemaType.ARRAY,
+      items: {
+        type: SchemaType.STRING,
+        description:
+          "A bunch of random questions about the image that you will answer it later. The questions should be fun, very random, it should make the person uncomfortable, and it should be very personal. The questions should be very short, and it should not be more than 5 words.",
+      },
     },
   },
-  required: ["poetic", "imageBackground"],
+  required: ["poetic", "questions"],
 };
 
 export interface ExtractedData {
   poetic: string;
-  imageBackground: string;
+  questions: string[];
 }
 
 // 4. Initialize the AI client

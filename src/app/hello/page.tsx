@@ -59,15 +59,15 @@ const page: FC<pageProps> = ({}) => {
       ]);
 
       const text = result.response.text();
-      const { poetic, imageBackground }: ExtractedData = JSON.parse(text);
-      console.log(poetic, imageBackground);
-      setContent([poetic, imageBackground]);
+      const { poetic, questions }: ExtractedData = JSON.parse(text);
+      console.log(poetic, questions);
+      setContent([poetic, ...questions]);
     }
   };
   return (
     <main className="w-screen h-screen flex items-center justify-center gap-4 flex-col">
       <div className="container  flex items-center justify-center gap-4 flex-col">
-        <div className="grid w-full grid-cols-1 md:grid-cols-2 items-start justify-center">
+        <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-6 items-start justify-center">
           <video width={600} height={200} ref={videoRef} autoPlay />
           <div className="flex flex-col items-start justify-center gap-8">
             <Button
@@ -80,9 +80,12 @@ const page: FC<pageProps> = ({}) => {
             >
               Take Picture
             </Button>
-            <ul className="flex gap-2 items-start justify-center flex-col text-4xl">
+            <ul className="flex gap-4 items-start justify-center flex-col text-4xl">
               {content.map((item, i) => (
-                <li className="text-[16px] text-foreground" key={i}>
+                <li
+                  className="text-[16px] text-foreground leading-normal border-b "
+                  key={i}
+                >
                   {item}
                 </li>
               ))}

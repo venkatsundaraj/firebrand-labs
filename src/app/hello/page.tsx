@@ -8,7 +8,7 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import UseWebcam from "@/app/_components/hooks/use-webcam";
+import UseWebcam from "@/app/_components/hooks/UseWebcam";
 import { Button } from "@/app/_components/button";
 import {
   dataURIToBlob,

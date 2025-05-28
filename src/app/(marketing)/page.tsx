@@ -3,7 +3,12 @@
 import { Button } from "@/app/_components/button";
 import UseWebcam from "@/app/_components/hooks/UseWebcam";
 import { buttonVariants } from "@/components/ui/button";
-import { chat, ExtractedData } from "@/lib/ai-config";
+import {
+  chat,
+  ExtractedData,
+  scenarioChat,
+  WorstScenarioData,
+} from "@/lib/ai-config";
 import {
   dataURIToBlob,
   fileToGenerativePart,
@@ -18,10 +23,8 @@ interface pageProps {}
 const page: FC<pageProps> = ({}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [content, setContent] = useState<Array<string>>([
-    "Hello World",
-    "One Two",
-  ]);
+  const [content, setContent] = useState<Array<string>>([]);
+  const [respose, setRespose] = useState<string>("");
   const { initWebcam, isReady, stream, captureFrame, stopWebcam } = UseWebcam();
 
   useEffect(() => {
@@ -58,12 +61,32 @@ const page: FC<pageProps> = ({}) => {
       setContent([...questions]);
     }
   };
+  const textClickHanlder = async function (text: string) {
+    const prompt = `Based on these questions and answers about a person, create a hilariously exaggerated "worst case scenario" prediction for their future. Make it funny and over-the-top, but not mean-spirited. Think like a playful fortune teller with a sense of humor:
+
+    ${text}
+    
+    Create a funny worst-case scenario that connects to their answers in an absurd but creative way.`;
+
+    // Send only text prompt (no image needed)
+    const result: GenerateContentResult = await scenarioChat.sendMessage(
+      prompt
+    );
+
+    const responseText: string = result.response.text();
+    const scenarioData: WorstScenarioData = JSON.parse(responseText);
+    console.log(scenarioData.explanation);
+
+    setRespose(scenarioData.explanation);
+
+    return scenarioData;
+  };
   return (
     <main className="w-screen h-screen flex items-center justify-center gap-4 flex-col">
       <div className="container  flex items-center justify-center gap-4 flex-col">
-        <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-6 items-start justify-center">
+        <div className="grid w-full grid-cols-1 md:grid-cols-3 gap-6 items-start justify-center">
           <video width={600} height={200} ref={videoRef} autoPlay />
-          <div className="flex flex-col items-start justify-center gap-8">
+          <div className="flex flex-col items-start justify-center gap-8 md:col-start-2 md:col-end-4 disabled:cursor-not-allowed">
             <Button
               className={cn(
                 buttonVariants({ variant: "default" }),
@@ -74,16 +97,22 @@ const page: FC<pageProps> = ({}) => {
             >
               Take Picture
             </Button>
-            <ul className="flex gap-4 items-start justify-center flex-col text-4xl">
-              {content.map((item, i) => (
-                <li
-                  className="text-[16px] text-foreground leading-normal border-b "
-                  key={i}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+            {!respose ? (
+              <ul className="flex gap-4 items-start justify-start flex-row flex-wrap ">
+                {content.map((item, i) => (
+                  <li
+                    onClick={() => textClickHanlder(item)}
+                    className="text-[16px] text-foreground px-4 py-1 leading-normal border-b bg-bakground rounded-full cursor-pointer hover:bg-primary hover:text-background border border-primary"
+                    key={i}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {respose ? (
+              <p className="text-[16px] text-foreground">{respose}</p>
+            ) : null}
           </div>
           <canvas className="hidden" ref={canvasRef} width={500} height={200} />
         </div>

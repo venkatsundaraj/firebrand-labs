@@ -1,4 +1,8 @@
-import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import {
+  GoogleGenerativeAI,
+  SchemaType,
+  ChatSession,
+} from "@google/generative-ai";
 import env from "@/env";
 
 interface GenerationConfig {
@@ -26,11 +30,36 @@ const schema = {
   required: ["questions"],
 };
 
+const scenarioSchema = {
+  description: "Funny worst case scenario prediction",
+  type: SchemaType.OBJECT,
+  properties: {
+    scenario: {
+      type: SchemaType.STRING,
+      description: "A humorous worst-case scenario prediction",
+    },
+    explanation: {
+      type: SchemaType.STRING,
+      description: "Why this scenario might happen based on the answers",
+    },
+    humor_level: {
+      type: SchemaType.NUMBER,
+      description: "Humor level from 1-10",
+    },
+  },
+  required: ["scenario", "explanation", "humor_level"],
+};
+
 export interface ExtractedData {
   questions: string[];
   // randomQuestions: string[];
 }
 
+export interface WorstScenarioData {
+  scenario: string;
+  explanation: string;
+  humor_level: number; // 1-10 scale
+}
 // 4. Initialize the AI client
 const genAI = new GoogleGenerativeAI(env.NEXT_PUBLIC_GEMINI_API_KEY);
 
@@ -48,8 +77,22 @@ const generationConfig: GenerationConfig = {
   responseSchema: schema, // Enforce structure
 };
 
+const scenarioConfig: GenerationConfig = {
+  temperature: 1.2, // Higher creativity for humor
+  topP: 0.95,
+  topK: 64,
+  maxOutputTokens: 2000,
+  responseMimeType: "application/json",
+  responseSchema: scenarioSchema,
+};
+
 // 6. Start a chat session (for context continuity)
 export const chat = model.startChat({
   history: [],
   generationConfig,
+});
+
+export const scenarioChat: ChatSession = model.startChat({
+  history: [],
+  generationConfig: scenarioConfig,
 });
